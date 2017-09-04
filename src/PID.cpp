@@ -6,7 +6,7 @@
 //#define use_twiddle
 using namespace std;
 
-PID::PID() : p_error(0), i_error(0), d_error(0), Kp(0), Ki(0), Kd(0), mCurrentSample(1), mIndexP(0), mRaised(false), mLowered(false), mTotalErrorOnLap(0) {
+PID::PID() : p_error(0), i_error(0), d_error(0), Kp(0), Ki(0), Kd(0), mCurrentSample(1), mIndexP(0), mRaised(false), mLowered(false), mLapError(0) {
  dp = { 1, 1, 1};
 }
 
@@ -43,7 +43,7 @@ void PID::twiddle(double cte) {
 	//considering we make a change in one of the parameters then we let the system stabilize for a number of samples
 	//i consider a full lap to be arround 3300 laps at my current chosen speed
 	if (mCurrentSample - 300 > 0) {
-		mTotalErrorOnLap += std::pow(cte, 2);
+		mLapError += std::pow(cte, 2);
 	}
 	
 	//do a step of the twiddle algo after every lap
@@ -59,8 +59,8 @@ void PID::twiddle(double cte) {
 		}
 		else if (mRaised && !mLowered) {
 			//if there is improvement move on to the next paramater and raise dp a little
-			if (mTotalErrorOnLap < mSmallestErr) {
-				mSmallestErr = mTotalErrorOnLap;
+			if (mLapError < mSmallestErr) {
+				mSmallestErr = mLapError;
 				dp[mIndexP] *= 1.1;
 				mRaised = false;
 				mLowered = false;
@@ -74,8 +74,8 @@ void PID::twiddle(double cte) {
 		}
 		else if (mRaised && mLowered) {
 			//improvement so raise dp a little more and move on
-			if (mTotalErrorOnLap < mSmallestErr) {
-				mSmallestErr = mTotalErrorOnLap;
+			if (mLapError < mSmallestErr) {
+				mSmallestErr = mLapError;
 				dp[mIndexP] *= 1.1;
 			}
 			else {
@@ -88,7 +88,7 @@ void PID::twiddle(double cte) {
 			mIndexP = (mIndexP + 1) % 3;
 		}
 		//new lap and twiddle pass
-		mTotalErrorOnLap = 0;
+		mLapError = 0;
 		mCurrentSample = 0;
 	}
 	else

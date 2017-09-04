@@ -60,7 +60,7 @@ private:
   unsigned int mIndexP;
   bool mRaised;
   bool mLowered;
-  double mTotalErrorOnLap;
+  double mLapError;
   
 };
 
