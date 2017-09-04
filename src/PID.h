@@ -57,7 +57,7 @@ private:
   std::vector<double> dp;
   double mSmallestErr;
   unsigned int mCurrentSample;
-  unsigned int mIndexP;
+  unsigned int mCurrentParameter;
   bool mRaised;
   bool mLowered;
   double mLapError;
