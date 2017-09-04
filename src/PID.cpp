@@ -67,7 +67,7 @@ void PID::twiddle(double cte) {
 				mIndexP = (mIndexP + 1) % 3;
 			}
 			else {
-				//no improvement than try to lower the value of the parameter by subtracting twice dp
+				//no improvement then try to lower the value of the parameter by subtracting twice dp
 				addValueToParameter(mIndexP, -2 * dp[mIndexP]);
 				mLowered = true;
 			}
