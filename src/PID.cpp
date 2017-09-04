@@ -43,7 +43,6 @@ void PID::twiddle(double cte) {
 	//the error we compare is the error on a full lap
 	//considering we make a change in one of the parameters then we let the system stabilize for a number of samples
 	//i consider a full lap to be arround 3300 laps at my current chosen speed
-	//if (mCurrentSample % (300 + 3000) - 300 > 0) {
 	if (mCurrentSample - 300 > 0) {
 		mTotalErrorOnLap += std::pow(cte, 2);
 	}
@@ -53,7 +52,6 @@ void PID::twiddle(double cte) {
 	//a "sort-of" state machine
 
 	//we try to raise the value, lower the value and compare errors
-	//if (mCurrentSample % (300 + 3000) == 0) {
 	if (mCurrentSample == 3300) {
 		if (!mRaised && !mLowered) { 
 			addValueToParameter(mIndexP, dp[mIndexP]);
