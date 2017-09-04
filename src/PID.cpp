@@ -53,10 +53,12 @@ void PID::twiddle(double cte) {
 	//we try to raise the value, lower the value and compare errors
 	if (mCurrentSample == 3300) {
 		if (!mRaised && !mLowered) { 
+			//first step try to raise the value of the parameter by adding dp
 			addValueToParameter(mIndexP, dp[mIndexP]);
 			mRaised = true;
 		}
 		else if (mRaised && !mLowered) {
+			//if there is improvement move on to the next paramater and raise dp a little
 			if (mTotalErrorOnLap < mSmallestErr) {
 				mSmallestErr = mTotalErrorOnLap;
 				dp[mIndexP] *= 1.1;
@@ -65,17 +67,19 @@ void PID::twiddle(double cte) {
 				mIndexP = (mIndexP + 1) % 3;
 			}
 			else {
+				//no improvement than try to lower the value of the parameter by subtracting twice dp
 				addValueToParameter(mIndexP, -2 * dp[mIndexP]);
 				mLowered = true;
 			}
 		}
 		else if (mRaised && mLowered) {
+			//improvement so raise dp a little more and move on
 			if (mTotalErrorOnLap < mSmallestErr) {
 				mSmallestErr = mTotalErrorOnLap;
 				dp[mIndexP] *= 1.1;
 			}
 			else {
-				//if no improvement is detected then we tweak the dp value
+				//if no improvement is detected then we tweak the dp value and go back to the initial value of the parameter
 				addValueToParameter(mIndexP, dp[mIndexP]);
 				dp[mIndexP] *= 0.9;
 			}
@@ -83,6 +87,7 @@ void PID::twiddle(double cte) {
 			mLowered = false;
 			mIndexP = (mIndexP + 1) % 3;
 		}
+		//new lap and twiddle pass
 		mTotalErrorOnLap = 0;
 		mCurrentSample = 0;
 	}
