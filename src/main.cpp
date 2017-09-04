@@ -34,7 +34,6 @@ int main(int argc, char *argv[])
 
   PID pid;
   PID pid_throttle;
-  // TODO: Initialize the pid variable.
   pid.Init(-0.187, -0.00033275, -3.2);
   //pid.Init(0, -0.00033275, -3.2);
   //pid.Init(-0.187, 0.0, -3.2);
@@ -67,7 +66,7 @@ int main(int argc, char *argv[])
 	  pid.UpdateError(cte);
 	  steer_value = pid.TotalError();
 	  pid_throttle.UpdateError(fabs(cte));
-	  //throttle_value = 0.60 - pid_throttle.TotalError();
+	  throttle_value = 0.60 - pid_throttle.TotalError();
           // DEBUG
           std::cout << "CTE: " << cte << " Steering Value: " << steer_value << std::endl;
 
