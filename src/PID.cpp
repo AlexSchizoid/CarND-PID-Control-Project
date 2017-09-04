@@ -25,7 +25,6 @@ void PID::Init(double Kp, double Ki, double Kd) {
 }
 
 void PID::UpdateError(double cte) {
-	//double previous_error = ((mCurrentSample == 1) ? cte : p_error);
 	double previous_error = p_error;
 	d_error = cte - previous_error;
 	p_error = cte;
