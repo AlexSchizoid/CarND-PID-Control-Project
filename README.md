@@ -107,4 +107,4 @@ I've implemented a PD controller for the throttle as well, in order to make the 
 
 Here is a video of the two controllers in action.
 [Steering and Throttle controllers](https://github.com/AlexSchizoid/CarND-PID-Control-Project/blob/master/videos/throttle_steering_pids.mp4)
-You can also find some other [videos](https://github.com/AlexSchizoid/CarND-PID-Control-Project/blob/master/videos/=) and see what happens with other types of controllers: P,D,Pd controllers etc. 
+You can also find some other [videos](https://github.com/AlexSchizoid/CarND-PID-Control-Project/blob/master/videos/) and see what happens with other types of controllers: P,D,Pd controllers etc. 
