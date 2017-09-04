@@ -94,3 +94,17 @@ still be compilable with cmake and make./
 ## How to write a README
 A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
 
+## Rubic Reflection
+The P parameter of the PID controller will attept to correct the error proportionally to a Ki Coefficient. If the car steers too much to the right, the controller will steer proportionally to the left in an attempt to correct. You can recognize the P parameter by the way the cars wobbles from right to left. Left to it's own devices the P controller tends to overshoot it's correction and eventually leave the track (check the videos folder).
+
+The I parameter sums the whole error and attempts to correct biases in the movement of the car. Since the simulator doesn't implement any type of bias, the effect in our case is only subtle around the curves. The car seems to turn a bit farther from the central line.
+
+The D parameter attempts to smooth out the turn of the P controller so it doesn't overshoot so much. It reduces the counter steer of the P as it approaces the central line.
+
+The values for the steering PID were initially selected empirically - i experimented with different values until i was satisfied that the car won't leave the track. Final values were discovered by using the twiddle algorithm. The car completed multiple laps until twiddle "converges".
+
+I've implemented a PD controller for the throttle as well, in order to make the car go a little faster. The error in this case is always positive since I want it to take the same action regardless if the car is left or right of center. There is no point for an I parameter since the error accumulates during the whole track and i wouldn't want to keep slowing the throttle down as it drives.
+
+Here is a video of the two controllers in action.
+[Steering and Throttle controllers](https://github.com/AlexSchizoid/CarND-PID-Control-Project/blob/master/videos/throttle_steering_pids.mp4)
+You can also find some other video and see what happens with other types of controllers: P,D,Pd controllers etc. 
